@@ -1,0 +1,151 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.cisco.assetscenter.dao.dataobject.user.*,com.cisco.assetscenter.dao.dataobject.*" %>
+<%
+	UserDO user = (UserDO)session.getAttribute("user");	
+	if(null == user) {
+		response.sendRedirect("requestDispatcher.do?url=login/login");
+	}
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>AssetsCenter</title>
+	<link rel="stylesheet" type="text/css" href="themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="themes/icon.css">
+	<script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/datagrid-detailview.js"></script>
+	<script type="text/javascript">
+	function initDataGrid(queryString){
+		if(null == queryString) {
+			queryString='?selectKey=&selectValue=&project=&startTime=&endTime=';
+		}
+		queryString = queryString.replace(/&amp;/g, '&')
+		$('#projectAssets').datagrid({
+			title:'Project Asset Setting',  
+		    width:'auto',  
+		    height:'auto',  
+		    remoteSort:false,  
+		    singleSelect:true,  
+		    nowrap:false,  
+		    fitColumns:false, 
+		    pageList:[10, 15, 20],
+		    url:'projectAsset.do' + queryString,  
+		    sortName: 'SET_TIME',
+			sortOrder: 'desc',
+			idField:'id',
+			frozenColumns:[[
+				{field:'ck',checkbox:true},
+				{title:'ID',field:'id',width:50,sortable:true,hidden:true}
+			]],
+			columns:[[
+				{field:'sn',title:'SN',width:120,rowspan:2,resizable:false},
+				{field:'eltms',title:'elTMS',width:120,rowspan:2,resizable:false},
+				{field:'owner',title:'User',width:60,rowspan:2,resizable:false},
+				{field:'project',title:'Project',width:120,rowspan:2,resizable:false},
+				{field:'SET_TIME',title:'Set Time',width:150,rowspan:2,resizable:false}
+			]],
+			pagination:true,
+			rownumbers:true,
+			onLoadSuccess:function(){  
+                $('#projectAssets').datagrid('clearSelections');
+            }  
+		});
+	}
+	$(function(){
+		$('#search').linkbutton({  
+			 plain:false  
+		});  
+		$('#search').linkbutton('enable'); 
+	});
+	</script>
+	<script type="text/javascript">
+		function submitQuery(){
+			$('#applyForm').form('submit',{
+				url:'projectAssetsAjaxRequest.do',
+				success:function(queryString){
+					initDataGrid(queryString);
+				}
+			});
+		}
+	</script>
+	<script type="text/javascript">
+		function setProject() {
+			var privilege = document.getElementById('privilege').value;
+			if(null == privilege || privilege == '' || privilege < 1) {
+				$.messager.alert('Warning','You don\'t have privilege to do this.'); 
+				return;
+			}
+			var row = $('#projectAssets').datagrid('getSelected');
+			if(null==row) {
+				$.messager.alert('Warning','You must select a row firstly.'); 
+				return;
+			}
+			document.getElementById('editId').value = row.id;
+			var $win;
+		    $win = $('#setProject').window({
+		            title:'Select the special project',
+		            width: 400,
+		            height: 200,
+		            shadow: true,
+		            modal:true,
+		            iconCls:'icon-edit',
+				    closed:true,
+				    minimizable:false,
+				    maximizable:false,
+				    collapsible:false,
+				    cache:false,
+				    href:'setProjectInitial.do?id='+row.id
+		         });
+		   
+		    $win.window('open');
+		}
+	</script>
+</head>
+<body class="easyui-layout" onload="initDataGrid()">
+		<div region="center" border="false">
+		<div class="easyui-layout" fit="true">
+			<div region="north" split="true" border="false" style="height:200px">
+					<form id="applyForm" method="post">
+					<table align="center">
+						<tr>
+							<td>
+								<select id="selectKey" class="easyui-combobox" name="selectKey" style="width:65px;" required="true">
+									<option value="sn" selected="selected">SN</option>
+									<option value="eltms">ELTMS</option>
+								</select>
+							</td>
+							<td><input type="text" id="selectValue" name="selectValue" style="width:200px;"></td>
+							<td><label>Project:</label></td>
+							<td><input type="text" id="project" name="project" style="width:200px;"></td>
+						</tr>
+						<tr>
+							<td><label>Start Time:</label></td>
+							<td><input id="startTime" name="startTime" class="easyui-datebox" required="false" style="width:207px;"></input></td>
+							<td><label>End Time:</label></td>
+							<td><input id="endTime" name="endTime" class="easyui-datebox" required="false" style="width:207px;"></input></td>
+						</tr>
+						<tr>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><a href="#" id="search" iconCls="icon-search" onclick="javascript:submitQuery();">Search</a></td>
+						</tr>
+					</table>
+					</form>
+					<div id="toolbar">  
+					    <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="javascript:setProject();">Set Project</a>  
+					</div>
+			</div>
+			<div region="center" border="false">
+				<table id="projectAssets" toolbar="#toolbar"></table>
+			</div>
+		</div>
+	</div>
+	<div id="setProject" class="easyui-window" style="width:800px;height:400px;padding:5px;" closed="true"></div>
+	<input type="hidden" id="editId" name="editId"/>
+	<input type="hidden" id="privilege" name="privilege" value="<%=user.getRole()%>"/>
+</body>
+</html>

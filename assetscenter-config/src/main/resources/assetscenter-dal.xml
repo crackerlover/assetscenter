@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" default-autowire="byName">
+	 <!-- Order configuration -->
+	 <bean id="orderDAO" class="com.cisco.assetscenter.dao.impl.DefaultOrderDAO"/>
+	 <!-- Asset configuration -->
+	 <bean id="assetTypeDAO" class="com.cisco.assetscenter.dao.impl.DefaultAssetTypeDAO"/>
+	 <bean id="cacheAssetTypeDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheAssetTypeDAO">
+	 	<constructor-arg index="0" ref="assetTypeDAO"/>
+	 </bean>
+	 <bean id="assetDAO" class="com.cisco.assetscenter.dao.impl.DefaultAssetDAO">
+	 	<property name="userDAO" ref="userDAO"/>
+	 </bean>
+	 <!-- Case configuration -->
+	 <bean id="caseDAO" class="com.cisco.assetscenter.dao.impl.DefaultCaseDAO"/>
+	 <bean id="caseTypeDAO" class="com.cisco.assetscenter.dao.impl.DefaultCaseTypeDAO"/>
+	 <bean id="cacheCaseTypeDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheCaseTypeDAO">
+	 	<constructor-arg index="0" ref="caseTypeDAO"/>
+	 </bean>
+	 <!-- Team configuration -->
+	 <bean id="teamDAO" class="com.cisco.assetscenter.dao.impl.DefaultTeamDAO">
+	 	<property name="userDAO" ref="userDAO"/>
+	 </bean>
+	 <bean id="cacheTeamDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheTeamDAO">
+	 	<constructor-arg index="0" ref="teamDAO"/>
+	 </bean>
+	  <!-- Project configuration -->
+	 <bean id="projectDAO" class="com.cisco.assetscenter.dao.impl.DefaultProjectDAO">
+	 	<property name="userDAO" ref="userDAO"/>
+	 </bean>
+	 <bean id="cacheProjectDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheProjectDAO">
+	 	<constructor-arg index="0" ref="projectDAO"/>
+	 </bean>
+	 <!-- User configuration -->
+	 <bean id="userDAO" class="com.cisco.assetscenter.dao.impl.DefaultUserDAO"/>
+	 <!-- Transfer configuration -->
+	 <bean id="transferDAO" class="com.cisco.assetscenter.dao.impl.DefaultTransferDAO"/>
+	 <!-- ProjectTeam configuration -->
+	 <bean id="projectTeamDAO" class="com.cisco.assetscenter.dao.impl.DefaultProjectTeamDAO"/>
+	 <!-- Project Apply Record -->
+	 <bean id="projectApplyRecordDAO" class="com.cisco.assetscenter.dao.impl.DefaultProjectApplyRecordDAO"/>
+	 <!-- Team Apply Record -->
+	 <bean id="teamApplyRecordDAO" class="com.cisco.assetscenter.dao.impl.DefaultTeamApplyRecordDAO"/>
+	 <!-- Project Asset -->
+	 <bean id="projectAssetDAO" class="com.cisco.assetscenter.dao.impl.DefaultProjectAssetDAO"/>
+	 <!-- Team Asset -->
+	 <bean id="teamAssetDAO" class="com.cisco.assetscenter.dao.impl.DefaultTeamAssetDAO"/>
+	 <!-- Verify configuration -->
+	 <bean id="verifyDAO" class="com.cisco.assetscenter.dao.impl.DefaultVerifyDAO"/>
+</beans>

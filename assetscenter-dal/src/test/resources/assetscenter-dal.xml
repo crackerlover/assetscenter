@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" default-autowire="byName">
+	 
+	 <bean id="orderDAO" class="com.cisco.assetscenter.dao.impl.DefaultOrderDAO">
+	 </bean>
+	 <bean id="assetDAO" class="com.cisco.assetscenter.dao.impl.DefaultAssetDAO"/>
+	 <bean id="assetTypeDAO" class="com.cisco.assetscenter.dao.impl.DefaultAssetTypeDAO">
+	 	<property name="dataSource" ref="dataSource"/>
+	 </bean>
+	 <bean id="cacheAssetTypeDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheAssetTypeDAO">
+	 	<constructor-arg index="0" ref="assetTypeDAO"/>
+	 </bean>
+	 <bean id="caseTypeDAO" class="com.cisco.assetscenter.dao.impl.DefaultCaseTypeDAO"/>
+	 <bean id="cacheCaseTypeDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheCaseTypeDAO">
+	 	<constructor-arg index="0" ref="caseTypeDAO"/>
+	 </bean>
+	 <bean id="caseDAO" class="com.cisco.assetscenter.dao.impl.DefaultCaseDAO"/>
+	 <bean id="teamDAO" class="com.cisco.assetscenter.dao.impl.DefaultTeamDAO"/>
+	 <bean id="cacheTeamDAO" class="com.cisco.assetscenter.dao.impl.cache.CacheTeamDAO">
+	 	<constructor-arg index="0" ref="teamDAO"/>
+	 </bean>
+	 <bean id="userDAO" class="com.cisco.assetscenter.dao.impl.DefaultUserDAO"/>
+	 <bean id="transferDAO" class="com.cisco.assetscenter.dao.impl.DefaultTransferDAO"/>
+</beans>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/assetscenter/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages"/>
+	</bean>
+	<!-- RequestDispatcherController Configuration -->
+	<bean name="/requestDispatcher.do" class="com.cisco.assetscenter.web.util.RequestDispatcherController"></bean>
+	<bean name="/verify.do" class="com.cisco.assetscenter.web.util.VerifyController">
+		<property name="verifyService" ref="verifyService"/>
+		<property name="projectApplyRecordService" ref="projectApplyRecordService"/>
+		<property name="teamApplyRecordService" ref="teamApplyRecordService"/>
+		<property name="projectService" ref="projectService"/>
+		<property name="teamService" ref="teamService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="userService" ref="userService"/>
+		<property name="assetService" ref="assetService"/>
+		<property name="transferService" ref="transferService"/>
+	</bean>
+	<bean name="/loginDispatcher.do" class="com.cisco.assetscenter.web.util.LoginDispatcherController"></bean>
+	<bean name="/orderAjaxRequest.do" class="com.cisco.assetscenter.web.util.OrderAjaxRequestController"></bean>
+	<bean name="/assetAjaxRequest.do" class="com.cisco.assetscenter.web.util.AssetAjaxRequestController"></bean>
+	<bean name="/casetypeAjaxRequest.do" class="com.cisco.assetscenter.web.util.CaseTypeAjaxRequestController"></bean>
+	<bean name="/caseAjaxRequest.do" class="com.cisco.assetscenter.web.util.CaseAjaxRequestController"></bean>
+	<bean name="/projectAjaxRequest.do" class="com.cisco.assetscenter.web.util.ProjectAjaxRequestController"></bean>
+	<bean name="/teamAjaxRequest.do" class="com.cisco.assetscenter.web.util.TeamAjaxRequestController"></bean>
+	<bean name="/userAjaxRequest.do" class="com.cisco.assetscenter.web.util.UserAjaxRequestController"></bean>
+	<bean name="/transferAjaxRequest.do" class="com.cisco.assetscenter.web.util.TransferAjaxRequestController"></bean>
+	<bean name="/applyAjaxRequest.do" class="com.cisco.assetscenter.web.util.ApplyAjaxRequestController"></bean>
+	<bean name="/applyTeamAjaxRequest.do" class="com.cisco.assetscenter.web.util.ApplyTeamAjaxRequestController"></bean>
+	<bean name="/projectAssetsAjaxRequest.do" class="com.cisco.assetscenter.web.util.ProjectAssetsAjaxRequestController"></bean>
+	<bean name="/teamAssetsAjaxRequest.do" class="com.cisco.assetscenter.web.util.TeamAssetsAjaxRequestController"></bean>
+	<bean name="/repair.do" class="com.cisco.assetscenter.web.util.RepairDBController">
+		<property name="assetService" ref="assetService"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean name="/treeInitial.do" class="com.cisco.assetscenter.web.util.TreeInitialController">
+		<property name="projectService" ref="projectService"/>
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	
+	<!-- Order Model Configuration -->
+	<bean name="/orderView.do" class="com.cisco.assetscenter.web.order.OrderViewController">
+		<property name="orderService" ref="orderService"></property>
+	</bean>
+	<!-- Order Delete Configuration -->
+	<bean name="/orderDelete.do" class="com.cisco.assetscenter.web.order.OrderDeleteController">
+		<property name="orderService" ref="orderService"></property>
+	</bean>
+	<!-- Order Add Configuration -->
+	<bean name="/orderAdd.do" class="com.cisco.assetscenter.web.order.OrderAddController">
+		<property name="orderService" ref="orderService"></property>
+		<property name="assetTypeService" ref="assetTypeService"></property>
+	</bean>
+	<!-- Order Edit Configuration -->
+	<bean name="/orderEdit.do" class="com.cisco.assetscenter.web.order.OrderEditController">
+		<property name="orderService" ref="orderService"></property>
+		<property name="assetTypeService" ref="assetTypeService"></property>
+	</bean>
+	<!-- Order Initial Configuration -->
+	<bean name="/orderInitial.do" class="com.cisco.assetscenter.web.order.OrderInitialController">
+		<property name="orderService" ref="orderService"></property>
+		<property name="assetTypeService" ref="assetTypeService"></property>
+	</bean>
+	<!-- Order Detail Configuration -->
+	<bean name="/orderDetail.do" class="com.cisco.assetscenter.web.order.OrderDetailController">
+		<property name="orderService" ref="orderService"></property>
+	</bean>
+	
+	<!-- Asset Type Configuration -->
+	<bean name="/assetTypeView.do" class="com.cisco.assetscenter.web.asset.AssetTypeViewController">
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<!-- Asset Configuration -->
+	<bean name="/assetView.do" class="com.cisco.assetscenter.web.asset.AssetViewController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"></property>
+	</bean>
+	
+	<!-- Asset Initial Configuration -->
+	<bean name="/assetInitial.do" class="com.cisco.assetscenter.web.asset.AssetInitialController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<!-- Asset Delete Configuration -->
+	<bean name="/assetDelete.do" class="com.cisco.assetscenter.web.asset.AssetDeleteController">
+		<property name="assetService" ref="assetService"/>
+	</bean>
+	<!-- Asset Add Configuration -->
+	<bean name="/assetAdd.do" class="com.cisco.assetscenter.web.asset.AssetAddController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<!-- Asset Edit Configuration -->
+	<bean name="/assetEdit.do" class="com.cisco.assetscenter.web.asset.AssetEditController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	
+	<bean name="/status.do" class="com.cisco.assetscenter.web.asset.StatusController">
+		<property name="assetService" ref="assetService"/>
+	</bean>
+	
+	<!-- Case Type Configuration -->
+	<bean name="/caseTypeView.do" class="com.cisco.assetscenter.web.cases.CaseTypeViewController">
+		<property name="caseTypeService" ref="caseTypeService"/>
+	</bean>
+	<bean name="/viewCaseType.do" class="com.cisco.assetscenter.web.cases.ViewCaseTypeController">
+	    <property name="caseTypeService" ref="caseTypeService"/>
+	</bean>
+	<!-- Case Configuration -->
+	<bean name="/caseView.do" class="com.cisco.assetscenter.web.cases.CaseViewController">
+		<property name="caseService" ref="caseService"/>
+		<property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	<!-- Case Initial Configuration -->
+	<bean name="/caseInitial.do" class="com.cisco.assetscenter.web.cases.CaseInitialController">
+		<property name="caseService" ref="caseService"/>
+		<property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	<!-- Case Add Configuration -->
+	<bean name="/caseAdd.do" class="com.cisco.assetscenter.web.cases.CaseAddController">
+		<property name="caseService" ref="caseService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="userService" ref="userService"/>
+		<property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	<!-- Case eDIT Configuration -->
+	<bean name="/caseEdit.do" class="com.cisco.assetscenter.web.cases.CaseEditController">
+		<property name="caseService" ref="caseService"/>
+		<property name="mailService" ref="mailService"/>
+	</bean>
+	<!-- Case Type Add Configuration -->
+	<bean name="/casetypeAdd.do" class="com.cisco.assetscenter.web.cases.CaseTypeAddController">
+		<property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	<!-- Case Type Edit Configuration -->
+	<bean name="/casetypeEdit.do" class="com.cisco.assetscenter.web.cases.CaseTypeEditController">
+	    <property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	<!-- Case Type Initial Configuration -->
+	<bean name="/casetypeInitial.do" class="com.cisco.assetscenter.web.cases.CaseTypeInitialController">
+	    <property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	
+	<!-- Case Type Delete Configuration -->
+	<bean name="/casetypeDelete.do" class="com.cisco.assetscenter.web.cases.CaseTypeDeleteController">
+	    <property name="caseTypeService" ref="caseTypeService"></property>
+	</bean>
+	
+	<!-- Case Delete Configuration -->
+	<bean name="/caseDelete.do" class="com.cisco.assetscenter.web.cases.CaseDeleteController">
+		<property name="caseService" ref="caseService"/>
+	</bean>
+	<bean name="/caseConfirm.do" class="com.cisco.assetscenter.web.cases.CaseConfirmController">
+		<property name="caseService" ref="caseService"/>
+		<property name="mailService" ref="mailService"/>
+	</bean>
+	
+	<!-- User Login Configuration -->
+	<bean name="/login.do" class="com.cisco.assetscenter.web.login.LoginController">
+		<property name="ciscoLoginService" ref="ciscoLoginService"/>
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/logout.do" class="com.cisco.assetscenter.web.login.LogoutController" />
+	<!-- User Configuration-->
+	<bean name="/userView.do" class="com.cisco.assetscenter.web.user.UserViewController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/userAdd.do" class="com.cisco.assetscenter.web.user.UserAddController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/userEdit.do" class="com.cisco.assetscenter.web.user.UserEditController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/userDelete.do" class="com.cisco.assetscenter.web.user.UserDeleteController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/userInitial.do" class="com.cisco.assetscenter.web.user.UserInitialController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/userSet.do" class="com.cisco.assetscenter.web.user.UserSetController">
+		<property name="userService" ref="userService"/>
+		<property name="teamService" ref="teamService"/>
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	
+	<!-- Transfer operation -->
+	<bean name="/transfer.do" class="com.cisco.assetscenter.web.transfer.TransferController">
+		<property name="assetService" ref="assetService"/>
+		<property name="transferService" ref="transferService"/>
+		<property name="userService" ref="userService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="verifyService" ref="verifyService"/>
+	</bean>
+	<bean name="/transferView.do" class="com.cisco.assetscenter.web.transfer.TransferViewController">
+		<property name="assetService" ref="assetService"/>
+		<property name="transferService" ref="transferService"/>
+	</bean>
+	<bean name="/transferEdit.do" class="com.cisco.assetscenter.web.transfer.TransferEditController">
+		<property name="transferService" ref="transferService"/>
+		<property name="assetService" ref="assetService"/>
+		<property name="mailService" ref="mailService"/>
+	</bean>
+	<bean name="/transferInitial.do" class="com.cisco.assetscenter.web.transfer.TransferInitialController">
+		<property name="transferService" ref="transferService"/>
+	</bean>
+	
+	<!-- Team configuration -->
+	<bean name="/teamView.do" class="com.cisco.assetscenter.web.team.TeamViewController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/viewTeam.do" class="com.cisco.assetscenter.web.team.ViewTeamController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/teamInitial.do" class="com.cisco.assetscenter.web.team.TeamInitialController">
+		<property name="teamService" ref="teamService"/>
+		<property name="teamApplyRecordService" ref="teamApplyRecordService"/>
+	</bean>
+	<bean name="/teamAdd.do" class="com.cisco.assetscenter.web.team.TeamAddController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/teamEdit.do" class="com.cisco.assetscenter.web.team.TeamEditController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/teamDelete.do" class="com.cisco.assetscenter.web.team.TeamDeleteController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/applyTeam.do" class="com.cisco.assetscenter.web.team.ApplyTeamController">
+		<property name="teamApplyRecordService" ref="teamApplyRecordService"/>
+		<property name="userService" ref="userService"/>
+		<property name="teamService" ref="teamService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="verifyService" ref="verifyService"/>
+	</bean>
+	<!-- Project configuration -->
+	<bean name="/projectView.do" class="com.cisco.assetscenter.web.project.ProjectViewController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/viewProject.do" class="com.cisco.assetscenter.web.project.ViewProjectController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/projectInitial.do" class="com.cisco.assetscenter.web.project.ProjectInitialController">
+		<property name="projectService" ref="projectService"/>
+		<property name="projectApplyRecordService" ref="projectApplyRecordService"/>
+	</bean>
+	
+	<bean name="/projectAdd.do" class="com.cisco.assetscenter.web.project.ProjectAddController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/projectEdit.do" class="com.cisco.assetscenter.web.project.ProjectEditController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/projectDelete.do" class="com.cisco.assetscenter.web.project.ProjectDeleteController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/applyProject.do" class="com.cisco.assetscenter.web.project.ApplyProjectController">
+		<property name="projectService" ref="projectService"/>
+		<property name="verifyService" ref="verifyService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="userService" ref="userService"/>
+		<property name="projectApplyRecordService" ref="projectApplyRecordService"/>
+	</bean>
+	<!-- Batch Import configuration -->
+	<bean name="/batchImport.do" class="com.cisco.assetscenter.web.asset.BatchImportController">
+		<property name="reportService" ref="reportService"/>
+	</bean>
+	<!-- Project Tree -->
+	<bean name="/projectTree.do" class="com.cisco.assetscenter.web.project.ProjectTreeController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<!-- Project Apply Record -->
+	<bean name="/applyView.do" class="com.cisco.assetscenter.web.project.ApplyViewController">
+		<property name="projectApplyRecordService" ref="projectApplyRecordService"/>
+	</bean>
+	<bean name="/projectConfirm.do" class="com.cisco.assetscenter.web.project.ProjectConfirmController">
+		<property name="projectApplyRecordService" ref="projectApplyRecordService"/>
+		<property name="userService" ref="userService"/>
+		<property name="projectService" ref="projectService"/>
+		<property name="mailService" ref="mailService"/>
+	</bean>
+	<!-- Team Apply Record -->
+	<bean name="/applyTeamView.do" class="com.cisco.assetscenter.web.team.ApplyTeamViewController">
+		<property name="teamApplyRecordService" ref="teamApplyRecordService"/>
+	</bean>
+	<bean name="/teamConfirm.do" class="com.cisco.assetscenter.web.team.TeamConfirmController">
+		<property name="teamApplyRecordService" ref="teamApplyRecordService"/>
+		<property name="userService" ref="userService"/>
+		<property name="teamService" ref="teamService"/>
+		<property name="mailService" ref="mailService"/>
+	</bean>
+	<!-- Project Asset -->
+	<bean name="/projectAsset.do" class="com.cisco.assetscenter.web.projectasset.ProjectAssetController">
+		<property name="projectAssetService" ref="projectAssetService"/>
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/setProjectInitial.do" class="com.cisco.assetscenter.web.projectasset.SetProjectInitialController">
+		<property name="projectService" ref="projectService"/>
+	</bean>
+	<bean name="/setProject.do" class="com.cisco.assetscenter.web.projectasset.SetProjectController">
+		<property name="projectAssetService" ref="projectAssetService"/>
+	</bean>
+	<!-- Team Asset -->
+	<bean name="/teamAsset.do" class="com.cisco.assetscenter.web.teamasset.TeamAssetController">
+		<property name="teamAssetService" ref="teamAssetService"/>
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/setTeamInitial.do" class="com.cisco.assetscenter.web.teamasset.SetTeamInitialController">
+		<property name="teamService" ref="teamService"/>
+	</bean>
+	<bean name="/setTeam.do" class="com.cisco.assetscenter.web.teamasset.SetTeamController">
+		<property name="teamAssetService" ref="teamAssetService"/>
+	</bean>
+	
+	<!-- Return configuration -->
+	<bean name="/myAsset.do" class="com.cisco.assetscenter.web.asset.MyAssetController">
+		<property name="assetService" ref="assetService"/>
+		<property name="assetTypeService" ref="assetTypeService"></property>
+	</bean>
+	<bean name="/returnAsset.do" class="com.cisco.assetscenter.web.asset.ReturnAssetController">
+		<property name="transferService" ref="transferService"/>
+		<property name="verifyService" ref="verifyService"/>
+		<property name="mailService" ref="mailService"/>
+		<property name="assetService" ref="assetService"/>
+	</bean>
+	
+	<!-- Add member configuration -->
+	<bean name="/addTeamMember.do" class="com.cisco.assetscenter.web.team.AddMemberController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean name="/addProjectMember.do" class="com.cisco.assetscenter.web.project.AddProjectController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<!-- Asset type configuration -->
+	<bean name="/assetTypeAjaxRequest.do" class="com.cisco.assetscenter.web.util.AssetTypeAjaxRequestController"></bean>
+   	<bean name="/viewAssetType.do" class="com.cisco.assetscenter.web.asset.ViewAssetTypeController">
+		<property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+
+	<bean name="/assetTypeAdd.do" class="com.cisco.assetscenter.web.asset.AssetTypeAddController">
+	   <property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<bean name="/assetTypeInitial.do" class="com.cisco.assetscenter.web.asset.AssetTypeInitialController">
+	   <property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<bean name="/assetTypeEdit.do" class="com.cisco.assetscenter.web.asset.AssetTypeEditController">
+	   <property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+	<bean name="/assetTypeDelete.do" class="com.cisco.assetscenter.web.asset.AssetTypeDeleteController">
+	   <property name="assetTypeService" ref="assetTypeService"/>
+	</bean>
+<!-- User Register Configuration -->
+	<bean name="/registerwin.do" class="com.cisco.assetscenter.web.login.RegisterController"></bean>
+	<bean name="/register.do" class="com.cisco.assetscenter.web.login.RegisterSendController">
+	    <property name="userService" ref="userService"></property>
+	    <property name="mailService" ref="mailService"></property>
+	    <property name="verifyService" ref="verifyService"></property>
+	</bean>
+	<bean name="/data2xml.do" class="com.cisco.assetscenter.web.util.Data2XmlController">
+		<property name="assetService" ref="assetService"/>
+	</bean>
+</beans>

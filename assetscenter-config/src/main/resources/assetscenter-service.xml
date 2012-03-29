@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd" default-autowire="byName">
+	 
+	 <bean id="orderService" class="com.cisco.assetscenter.service.asset.impl.DefaultOrderService">
+	 	<property name="orderDAO" ref="orderDAO"/>
+	 </bean>
+	 <bean id="assetTypeService" class="com.cisco.assetscenter.service.asset.impl.DefaultAssetTypeService">
+	 	<property name="cacheAssetTypeDAO" ref="cacheAssetTypeDAO"/>
+	 </bean>
+	 <bean id="assetService" class="com.cisco.assetscenter.service.asset.impl.DefaultAssetService">
+	 	<property name="assetDAO" ref="assetDAO"/>
+	 	<property name="transferDAO" ref="transferDAO"/>
+	 </bean>
+	 <!-- Login service configuration -->
+	 <bean id="ciscoLoginService" class="com.cisco.assetscenter.service.asset.impl.DefaultCiscoLoginService"/>
+	 <!-- Case configuration -->
+	 <bean id="caseService" class="com.cisco.assetscenter.service.asset.impl.DefaultCaseService">
+	 	<property name="caseDAO" ref="caseDAO"/>
+	 </bean>
+	 <bean id="caseTypeService" class="com.cisco.assetscenter.service.asset.impl.DefaultCaseTypeService">
+	 	<property name="cacheCaseTypeDAO" ref="cacheCaseTypeDAO"/>
+	 </bean>
+	 <!-- Team configuration -->
+	 <bean id="teamService" class="com.cisco.assetscenter.service.asset.impl.DefaultTeamService">
+	 	<property name="cacheTeamDAO" ref="cacheTeamDAO"/>
+	 </bean>
+	 <!-- Project configuration -->
+	 <bean id="projectService" class="com.cisco.assetscenter.service.asset.impl.DefaultProjectService">
+	 	<property name="cacheProjectDAO" ref="cacheProjectDAO"/>
+	 </bean>
+	 <!-- User Configuration -->
+	 <bean id="userService" class="com.cisco.assetscenter.service.asset.impl.DefaultUserService">
+	 	<property name="userDAO" ref="userDAO"/>
+	 </bean>
+	 <!-- Transfer configuration -->
+	  <bean id="transferService" class="com.cisco.assetscenter.service.asset.impl.DefaultTransferService">
+	 	<property name="transferDAO" ref="transferDAO"/>
+	 </bean>
+	 <!-- Report configuration -->
+	 <bean id="reportService" class="com.cisco.assetscenter.service.asset.impl.DefaultReportService">
+	 	<property name="assetDAO" ref="assetDAO"/>
+	 	<property name="cacheAssetTypeDAO" ref="cacheAssetTypeDAO"/>
+	 </bean>
+	 <!-- ProjectTeam configuration -->
+	 <bean id="ProjectTeamService" class="com.cisco.assetscenter.service.asset.impl.DefaultProjectTeamService">
+	 	<property name="projectTeamDAO" ref="projectTeamDAO"/>
+	 </bean>
+	 <!-- Mail configuration -->
+	 <bean id="mailService" class="com.cisco.assetscenter.service.asset.impl.DefaultMailService"/>
+	 <!-- Project Apply Record -->
+	 <bean id="projectApplyRecordService" class="com.cisco.assetscenter.service.asset.impl.DefaultProjectApplyRecordService">
+	 	<property name="projectApplyRecordDAO" ref="projectApplyRecordDAO"></property>
+	 </bean>
+	 <!-- Team Apply Record -->
+	 <bean id="teamApplyRecordService" class="com.cisco.assetscenter.service.asset.impl.DefaultTeamApplyRecordService">
+	 	<property name="teamApplyRecordDAO" ref="teamApplyRecordDAO"></property>
+	 </bean>
+	 <!-- Project Asset -->
+	 <bean id="projectAssetService" class="com.cisco.assetscenter.service.asset.impl.DefaultProjectAssetService">
+	 	<property name="projectAssetDAO" ref="projectAssetDAO"></property>
+	 </bean>
+	 <!-- Team Asset -->
+	 <bean id="teamAssetService" class="com.cisco.assetscenter.service.asset.impl.DefaultTeamAssetService">
+	 	<property name="teamAssetDAO" ref="teamAssetDAO"></property>
+	 </bean>
+	 <!-- Verify Record -->
+	 <bean id="verifyService" class="com.cisco.assetscenter.service.asset.impl.DefaultVerifyService">
+	 	<property name="verifyDAO" ref="verifyDAO"></property>
+	 </bean>
+</beans>
